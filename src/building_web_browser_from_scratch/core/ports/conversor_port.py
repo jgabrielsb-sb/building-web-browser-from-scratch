@@ -5,8 +5,8 @@ converting a certain object to another
 from abc import abstractmethod, ABC
 from building_web_browser_from_scratch.core.exceptions import ConversorPortException
 
-class Conversor(ABC):
-    
+class ConversorPort(ABC):
+
     @abstractmethod
     def _run(self, input: any) -> any:
         pass
@@ -14,6 +14,6 @@ class Conversor(ABC):
     def run(self, input: any) -> any:
 
         try:
-            self._run()
+            return self._run(input)
         except Exception as e:
             raise ConversorPortException(f"Error on conversor: {e}")
