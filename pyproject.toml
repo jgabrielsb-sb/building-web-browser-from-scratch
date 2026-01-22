@@ -1,0 +1,36 @@
+[project]
+name = "building_web_browser_from_scratch"
+readme = "README.md"
+version = "1.0.0"
+authors = [
+  { name="João Gabriel Sampaio de Barros", email="jgabrielsb2002@gmail.com"},
+]
+description = "A project that builds a web browser from scratch"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+dependencies = [
+    "pydantic>=2.12.5",
+    "pytest>=9.0.2",
+    "pytest-html>=4.2.0",
+]
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/building_web_browser_from_scratch"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "--verbose",
+    "--html=report.html",
+]
