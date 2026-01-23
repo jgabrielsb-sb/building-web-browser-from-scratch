@@ -1,1 +1,1 @@
-from .core import ConversorPortException
+from .core import ConversorPortException, RequestPortException
