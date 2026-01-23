@@ -1,2 +1,3 @@
 from .dto_url import URL
-from .enum import SchemesEnum
+from .enum import SchemesEnum, MethodEnum
+from .ports.dto_request import GetInput, Request
