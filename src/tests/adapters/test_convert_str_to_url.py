@@ -19,7 +19,7 @@ class TestRun:
         url = convert_str_to_url.run(url)
         assert isinstance(url, URL)
 
-        assert url.scheme == SchemesEnum.HTTP
+        assert url.scheme == SchemesEnum.HTTPS
         assert url.hostname == 'www.example.com'
         assert url.path == '/index.html'
 
@@ -83,5 +83,28 @@ class TestRun:
         assert url.hostname == 'localhost'
         assert url.path == '/api/v1/health'
 
+    def test_if_raises_value_error_when_input_does_not_have_scheme_separator(self, convert_str_to_url : ConvertStrToUrl):
+        url = 'www.example.com/index.html'
 
-         
+        with pytest.raises(ValueError) as e:
+            convert_str_to_url._run(url)
+
+        assert "Failed getting url scheme: the input does not have `://`." in str(e.value)
+
+    def test_if_raises_value_error_when_scheme_is_not_valid(self, convert_str_to_url : ConvertStrToUrl):
+        url = 'invalid://www.example.com/index.html'
+
+        with pytest.raises(ValueError) as e:
+            convert_str_to_url._run(url)
+
+        assert f"Failed getting url scheme: the value 'invalid' is not a valid SchemeEnum" in str(e.value)
+
+    def test_if_raises_value_error_when_input_does_not_have_hostname_and_path_separator(self, convert_str_to_url : ConvertStrToUrl):
+        url = 'https://www.example.comindex.html'
+
+        with pytest.raises(ValueError) as e:
+            convert_str_to_url._run(url)
+
+        assert "Failed getting hostname: the www.example.comindex.html does not contain /." in str(e.value)
+
+        
