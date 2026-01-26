@@ -1,2 +1,3 @@
 from .convert_str_to_url import ConvertStrToUrl
 from .convert_request_to_str import ConvertRequestToStr
+from .convert_str_to_request import ConvertStrToRequest
