@@ -1,15 +1,15 @@
 from abc import abstractmethod, ABC
-from building_web_browser_from_scratch.core.models import GetInput
+from building_web_browser_from_scratch.core.models import Request
 from building_web_browser_from_scratch.core.exceptions import RequestPortException
 
 class RequestPort(ABC):
     @abstractmethod
-    def _get(self, input: GetInput):
+    def _get(self, input: Request):
         pass
 
-    def get(self, input: GetInput):
-        if not isinstance(input, GetInput):
-            raise TypeError('input must be a GetInput')
+    def get(self, input: Request):
+        if not isinstance(input, Request):
+            raise TypeError('input must be a Request')
 
         try:    
             return self._get(input)

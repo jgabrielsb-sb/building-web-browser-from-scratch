@@ -1,18 +1,30 @@
 from pydantic import BaseModel
 from building_web_browser_from_scratch.core.models import MethodEnum
 
-class Request(BaseModel):
-    method: MethodEnum 
-    hostname: str
+class RequestLine(BaseModel):
+    method: MethodEnum
+    http_version: str = "HTTP/1.0"
     path: str
-    content: str | None
 
-class GetInput(Request):
-    method: MethodEnum = MethodEnum.GET
+class BaseHeader(BaseModel):
+    name: str
+    value: str
+
+class Request(BaseModel):
+    request_line: RequestLine
+    headers: list[BaseHeader]
+
+class HostHeader(BaseHeader):
+    name: str = "Host"
+    value: str
 
     @property
-    def get_method(self) -> MethodEnum:
-        return MethodEnum.GET
+    def name(self) -> str:
+        return "Host"
+
+    
+
+
 
 
 
