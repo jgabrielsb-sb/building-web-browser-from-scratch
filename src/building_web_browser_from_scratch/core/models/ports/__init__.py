@@ -1,1 +1,1 @@
-from .dto_request import Request, RequestLine, BaseHeader, HostHeader
+from .dto_request import Request, RequestLine, BaseHeader

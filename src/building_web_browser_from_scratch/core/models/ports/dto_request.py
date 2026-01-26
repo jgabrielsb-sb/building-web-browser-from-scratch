@@ -13,15 +13,6 @@ class BaseHeader(BaseModel):
 class Request(BaseModel):
     request_line: RequestLine
     headers: list[BaseHeader]
-
-class HostHeader(BaseHeader):
-    name: str = "Host"
-    value: str
-
-    @property
-    def name(self) -> str:
-        return "Host"
-
     
 
 
