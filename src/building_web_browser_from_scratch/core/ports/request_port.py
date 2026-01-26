@@ -4,16 +4,28 @@ from building_web_browser_from_scratch.core.exceptions import RequestPortExcepti
 
 class RequestPort(ABC):
     @abstractmethod
-    def _get(self, input: Request):
+    def _send_request(self, input: Request):
         pass
 
-    def get(self, input: Request):
+    def send_request(self, input: Request):
         if not isinstance(input, Request):
             raise TypeError('input must be a Request')
 
         try:    
-            return self._get(input)
+            return self._send_request(input)
         except Exception as e:
-            raise RequestPortException(f"Error on get request: {e}")
+            raise RequestPortException(f"Error on send request: {e}")
+
+    @abstractmethod
+    def _get_response(self) -> Request:
+        pass
+
+    def get_response(self) -> Request:
+        try:
+            return self._get_response()
+        except Exception as e:
+            raise RequestPortException(f"Error on get response: {e}")
+    
+
 
     
