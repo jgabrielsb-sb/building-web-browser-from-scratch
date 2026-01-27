@@ -1,38 +1,51 @@
 import socket
 
+from building_web_browser_from_scratch.core.models import *
 from building_web_browser_from_scratch.adapters.conversors import ConvertRequestToStr
-from building_web_browser_from_scratch.core.models import (
-    Request, 
-    RequestLine, 
-    MethodEnum, 
-    BaseHeader
+from building_web_browser_from_scratch.adapters.requests import SocketHTTPRequest
+HOST = "example.com"
+PORT = 80
+
+request = (
+    "GET / HTTP/1.1\r\n"
+    "Host: example.com\r\n"
+    "User-Agent: socket-learning-client/1.0\r\n"
+    "Accept: */*\r\n"
+    "Connection: close\r\n"
+    "\r\n"
+)
+request = Request(
+    request_line=RequestLine(
+        method=MethodEnum.GET,
+        path="/",
+        http_version="HTTP/1.0"
+    ),
+    headers=[
+        BaseHeader(name="Host", value="example.com"),
+        #BaseHeader(name="User-Agent", value="socket-learning-client/1.0"),
+        #BaseHeader(name="Accept", value="*/*"),
+        #BaseHeader(name="Connection", value="close"),
+    ]
 )
 
-if __name__ == "__main__":
-    ## getting request as tr
-    request = Request(
-        request_line=RequestLine(method=MethodEnum.GET, path="/", http_version="HTTP/1.0"),
-        headers=[BaseHeader(name="Host", value="localhost")]
-    )
-    convert_request_to_str = ConvertRequestToStr()
-    request_str = convert_request_to_str.run(request)
-    
+socket_http_request = SocketHTTPRequest()
+response = socket_http_request.send_request(request, Destiny(url="example.com", port=80))
+print(response.content)
 
-    ## sending via socket
-    s = socket.socket(
-        family=socket.AF_INET,
-        type=socket.SOCK_STREAM,
-        proto=socket.IPPROTO_TCP
-    )
-    s.connect(('example.org', 80))
-    s.send(request_str.encode('utf8'))
+# convert_request_to_str = ConvertRequestToStr().run(request)
 
-    ## getting response
-    response = s.makefile("r", encoding="utf8", newline="\r\n")
-    
-    while True:
-        line = response.readline()
-        print(line)
+# print("=== REQUEST ===")
+# #print(request.replace("\r", "\\r").replace("\n", "\\n\n"))
 
-        if line == '\r\n': break
+# with socket.create_connection((HOST, PORT), timeout=10) as s:
+#     s.sendall(convert_request_to_str.encode("utf-8"))
 
+#     response = b""
+#     while True:
+#         data = s.recv(4096)
+#         if not data:
+#             break
+#         response += data
+
+# print("\n=== RAW RESPONSE ===")
+# print(response.decode("iso-8859-1"))
