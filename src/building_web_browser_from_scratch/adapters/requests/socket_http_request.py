@@ -21,7 +21,7 @@ class SocketHTTPRequest(RequestPort):
             type=socket.SOCK_STREAM,
             proto=socket.IPPROTO_TCP
         )
-        s.connect((to.url, to.port))
+        s.connect((to.hostname, to.port))
         return s
 
     def _get_encoded_request(self, input: Request) -> str:

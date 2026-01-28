@@ -28,7 +28,7 @@ class Response(BaseModel):
 
 class Destiny(BaseModel):
     port: int
-    url: str
+    hostname: str
 
 
 
