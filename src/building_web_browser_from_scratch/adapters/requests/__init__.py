@@ -1,1 +1,2 @@
 from .socket_http_request import SocketHTTPRequest
+from .socket_https_request import SocketHTTPSRequest
